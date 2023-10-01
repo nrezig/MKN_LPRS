@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class type_offre extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['libelle'];
+
 }
