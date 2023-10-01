@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', function () {
+    return view('welcome');
+});
+
 
 Route::get('/testco', function () {
     try {
@@ -22,6 +26,8 @@ Route::get('/testco', function () {
     }
 });
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::get('/creationoffre', function () {
+    return view('');
 });
+
