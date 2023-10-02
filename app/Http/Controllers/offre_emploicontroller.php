@@ -12,7 +12,9 @@ class offre_emploicontroller extends Controller
      */
     public function index()
     {
-        //
+        $offre = offre_emploi::latest()->get();
+
+        return view("offre.index", compact("offre"));
     }
 
     /**

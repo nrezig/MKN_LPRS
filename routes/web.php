@@ -26,8 +26,3 @@ Route::get('/testco', function () {
     }
 });
 
-
-Route::get('/creationoffre', function () {
-    return view('');
-});
-
