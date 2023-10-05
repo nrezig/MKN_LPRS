@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\offre_emploi;
 use Illuminate\Http\Request;
 
+
 class offre_emploicontroller extends Controller
 {
     /**
@@ -12,9 +13,8 @@ class offre_emploicontroller extends Controller
      */
     public function index()
     {
-        $offre = offre_emploi::latest()->get();
+        return view('offre.index');
 
-        return view("offre.index", compact("offre"));
     }
 
     /**
@@ -22,7 +22,7 @@ class offre_emploicontroller extends Controller
      */
     public function create()
     {
-        //
+        return view('offre.create');
     }
 
     /**
@@ -30,7 +30,15 @@ class offre_emploicontroller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'titre'=>'required',
+            'description'=>'required',
+            'type'=>'required',
+            ]);
+
+        $newOffre = offre_emploi::create($data);
+
+        return redirect(route('offre.index'));
     }
 
     /**

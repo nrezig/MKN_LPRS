@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\offre_emploicontroller;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,7 @@ Route::get('/', function () {
 });
 
 
+
 Route::get('/testco', function () {
     try {
         DB::connection()->getPdo();
@@ -25,4 +27,9 @@ Route::get('/testco', function () {
         return "Erreur de connexion à la base de données : " . $e->getMessage();
     }
 });
+
+Route::get('/offre', [\App\Http\Controllers\offre_emploicontroller::class, 'index'])->name('offre.index');
+Route::get('/offre/store', [\App\Http\Controllers\offre_emploicontroller::class, 'store'])->name('offre.store');
+
+
 
