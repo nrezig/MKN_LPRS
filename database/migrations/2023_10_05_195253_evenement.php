@@ -23,15 +23,17 @@ return new class extends Migration
             $table->unsignedBigInteger('ref_salle');
             $table->unsignedBigInteger('ref_admin');
             $table->timestamps();
+
+
+
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
-        //
-    }
-};
+
+    }};
+

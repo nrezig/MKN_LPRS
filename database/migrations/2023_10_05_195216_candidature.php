@@ -16,8 +16,12 @@ return new class extends Migration
             $table->unsignedBigInteger('ref_etudiant');
             $table->unsignedBigInteger('ref_offre');
             $table->timestamps();
+
+
         });
     }
+
+
 
 
     /**

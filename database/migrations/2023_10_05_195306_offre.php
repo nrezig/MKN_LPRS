@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('etudiant', function (Blueprint $table) {
+        Schema::create('offre', function (Blueprint $table) {
             $table->id();
-            $table->string('domaine_etude', 70);
+            $table->string('titre', 100);
+            $table->string('description', 200);
+            $table->string('etat', 50);
+            $table->unsignedBigInteger('ref_type');
 
             $table->timestamps();
         });

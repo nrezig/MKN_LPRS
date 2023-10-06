@@ -11,17 +11,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('offre', function (Blueprint $table) {
+        Schema::create('admin', function (Blueprint $table) {
             $table->id();
-            $table->string('titre', 100);
-            $table->string('description', 200);
-            $table->string('etat', 50);
-            $table->unsignedBigInteger('ref_typeoffre');
-
+            $table->unsignedBigInteger('ref_user');
             $table->timestamps();
+
         });
     }
-
 
     /**
      * Reverse the migrations.

@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('type_offre', function (Blueprint $table) {
+        Schema::create('etudiant', function (Blueprint $table) {
             $table->id();
-            $table->text('libelle');
+            $table->string('domaine_etude', 70);
+            $table->unsignedBigInteger('ref_user');
+
 
             $table->timestamps();
         });
