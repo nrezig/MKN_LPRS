@@ -8,24 +8,28 @@
     <title>Document</title>
 </head>
 <body>
-<h1>Ajoutez une offre</h1>
-<form method="post" action="{{route('offre.store')}}">
+<h1>Modifiez une offre</h1>
+<form method="post" action="{{route('offre.update', ['offre'=>$offre])}}">
     @csrf
-    @method('post')
+    @method('put')
 
     <div>
         <label>Titre de l'offre</label>
-        <input type="text" name="titre" placeholder="titre">
+        <label>
+            <input type="text" name="titre" placeholder="titre" value="{{$offre->titre}}">
+        </label>
     </div>
 
     <div>
         <label>Description</label>
-        <input type="text" name="description" placeholder="description">
+        <label>
+            <input type="text" name="description" placeholder="description" value="{{$offre->description}}"/>
+        </label>
     </div>
 
     <div>
         <label>Type d'offre</label>
-        <select name="type" id="type">
+        <label for="type"></label><select name="type" id="type">
             <option value="CDI">CDI</option>
             <option value="CDD">CDD</option>
             <option value="apprentissage">Apprentissage</option>
@@ -33,9 +37,16 @@
         </select>
     </div>
 
+    <div>
+        <label>Etat</label>
+        <label>
+            <input type="text" name="etat" placeholder="etat" value="{{$offre->etat}}"/>
+        </label>
+    </div>
+
 
     <div>
-        <input type="submit" value="Valider">
+        <input type="submit" value="Modifier">
     </div>
 </form>
 </body>

@@ -352,8 +352,8 @@ class ComposerStaticInit085cd1b06e7ba00c81d5ca6abd62c1d5
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -526,6 +526,9 @@ class ComposerStaticInit085cd1b06e7ba00c81d5ca6abd62c1d5
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\entreprisecontrollerr' => __DIR__ . '/../..' . '/app/Http/Controllers/entreprisecontrollerr.php',
+        'App\\Http\\Controllers\\offrecontroller' => __DIR__ . '/../..' . '/app/Http/Controllers/offrecontroller.php',
+        'App\\Http\\Controllers\\type_offrecontroller' => __DIR__ . '/../..' . '/app/Http/Controllers/type_offrecontroller.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
@@ -537,6 +540,15 @@ class ComposerStaticInit085cd1b06e7ba00c81d5ca6abd62c1d5
         'App\\Http\\Middleware\\ValidateSignature' => __DIR__ . '/../..' . '/app/Http/Middleware/ValidateSignature.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
+        'App\\Models\\admin' => __DIR__ . '/../..' . '/app/Models/admin.php',
+        'App\\Models\\entreprise' => __DIR__ . '/../..' . '/app/Models/entreprise.php',
+        'App\\Models\\etudiant' => __DIR__ . '/../..' . '/app/Models/etudiant.php',
+        'App\\Models\\evenement' => __DIR__ . '/../..' . '/app/Models/evenement.php',
+        'App\\Models\\offre' => __DIR__ . '/../..' . '/app/Models/offre.php',
+        'App\\Models\\rdv' => __DIR__ . '/../..' . '/app/Models/rdv.php',
+        'App\\Models\\rep_entreprise' => __DIR__ . '/../..' . '/app/Models/rep_entreprise.php',
+        'App\\Models\\salle' => __DIR__ . '/../..' . '/app/Models/salle.php',
+        'App\\Models\\type_offre' => __DIR__ . '/../..' . '/app/Models/type_offre.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
