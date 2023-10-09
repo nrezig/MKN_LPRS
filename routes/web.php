@@ -27,13 +27,21 @@ Route::get('/testco', function () {
     }
 });
 
-Route::prefix('/evenement')->name('evenement')->controller([\App\Http\Controllers\EvenementController::class])->group(function(){
+Route::prefix('/evenement')->name('evenement.')->controller(\App\Http\Controllers\EvenementController::class)->group(function(){
     Route::get('/', 'index')->name('index');
     Route::get('/create',  'create')->name('create');
     Route::post('/',  'store')->name('store');
     Route::get('/{evenement}/edit',  'edit')->name('edit');
     Route::put('/{evenement}/update', 'update')->name('update');
     Route::delete('/{evenement}/destroy',  'destroy')->name('destroy');
+});
+
+Route::prefix('/rdv')->name('rdv.')->controller(\App\Http\Controllers\RdvController::class)->group(function (){
+    Route::get('/','index')->name('index');
+    Route::get('/create','create')->name('create');
+    Route::post('/','store')->name('store');
+    Route::get('/{rdv}/edit', 'edit')->name('edit');
+    Route::get('');
 });
 
 Route::get('/offre', [\App\Http\Controllers\offrecontroller::class, 'index'])->name('offre.index');
