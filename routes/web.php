@@ -27,10 +27,20 @@ Route::get('/testco', function () {
     }
 });
 
+Route::prefix('/evenement')->name('evenement')->controller([\App\Http\Controllers\EvenementController::class])->group(function(){
+    Route::get('/', 'index')->name('index');
+    Route::get('/create',  'create')->name('create');
+    Route::post('/',  'store')->name('store');
+    Route::get('/{evenement}/edit',  'edit')->name('edit');
+    Route::put('/{evenement}/update', 'update')->name('update');
+    Route::delete('/{evenement}/destroy',  'destroy')->name('destroy');
+});
+
 Route::get('/offre', [\App\Http\Controllers\offrecontroller::class, 'index'])->name('offre.index');
 Route::get('/offre/create', [\App\Http\Controllers\offrecontroller::class, 'create'])->name('offre.create');
 Route::post('/offre', [\App\Http\Controllers\offrecontroller::class, 'store'])->name('offre.store');
 Route::get('/offre/{offre}/edit', [\App\Http\Controllers\offrecontroller::class, 'edit'])->name('offre.edit');
 Route::put('/offre/{offre}/update', [\App\Http\Controllers\offrecontroller::class, 'update'])->name('offre.update');
 Route::delete('/offre/{offre}/destroy', [offrecontroller::class, 'destroy'])->name('offre.destroy');
+
 
