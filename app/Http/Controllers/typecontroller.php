@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\type;
 use App\Models\type_offre;
 use Illuminate\Http\Request;
 
-class type_offrecontroller extends Controller
+class typecontroller extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -42,7 +43,7 @@ class type_offrecontroller extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(type_offre $type_offre)
+    public function edit(type $type_offre)
     {
         //
     }
@@ -50,7 +51,7 @@ class type_offrecontroller extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, type_offre $type_offre)
+    public function update(Request $request, type $type_offre)
     {
         //
     }
@@ -58,7 +59,7 @@ class type_offrecontroller extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(type_offre $type_offre)
+    public function destroy(type $type_offre)
     {
         //
     }

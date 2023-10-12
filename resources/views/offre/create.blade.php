@@ -9,7 +9,8 @@
 </head>
 <body>
 <h1>Ajoutez une offre</h1>
-<form method="post" action="{{route('offre.store')}}">
+<form method="post" action="{{ route('offre.store') }}">
+
     @csrf
     @method('post')
 
@@ -25,12 +26,7 @@
 
     <div>
         <label>Type d'offre</label>
-        <select name="type" id="type">
-            <option value="CDI">CDI</option>
-            <option value="CDD">CDD</option>
-            <option value="apprentissage">Apprentissage</option>
-            <option value="stage">Stage</option>
-        </select>
+        <input type ="text" name="type" placeholder="type d'offre">
     </div>
 
 

@@ -46,9 +46,9 @@ Route::prefix('/rdv')->name('rdv.')->controller(\App\Http\Controllers\RdvControl
 
 Route::get('/offre', [\App\Http\Controllers\offrecontroller::class, 'index'])->name('offre.index');
 Route::get('/offre/create', [\App\Http\Controllers\offrecontroller::class, 'create'])->name('offre.create');
-Route::post('/offre', [\App\Http\Controllers\offrecontroller::class, 'store'])->name('offre.store');
 Route::get('/offre/{offre}/edit', [\App\Http\Controllers\offrecontroller::class, 'edit'])->name('offre.edit');
 Route::put('/offre/{offre}/update', [\App\Http\Controllers\offrecontroller::class, 'update'])->name('offre.update');
 Route::delete('/offre/{offre}/destroy', [offrecontroller::class, 'destroy'])->name('offre.destroy');
+Route::post('/offre/store', [\App\Http\Controllers\offrecontroller::class, 'store'])->name('offre.store');
 
 

@@ -29,12 +29,8 @@
 
     <div>
         <label>Type d'offre</label>
-        <label for="type"></label><select name="type" id="type">
-            <option value="CDI">CDI</option>
-            <option value="CDD">CDD</option>
-            <option value="apprentissage">Apprentissage</option>
-            <option value="stage">Stage</option>
-        </select>
+        <input type="text" name="type" placeholder="{{ $offre->type->libelle }}">
+
     </div>
 
     <div>

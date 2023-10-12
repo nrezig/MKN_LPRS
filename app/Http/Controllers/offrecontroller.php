@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\offre;
+use App\Models\type;
 use Illuminate\Http\Request;
 
 
@@ -13,10 +14,11 @@ class offrecontroller extends Controller
      */
     public function index()
     {
-        $offre = offre::all();
+        $offre = Offre::with('type')->get();
         return view('offre.index',['offre'=>$offre ] );
 
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -37,28 +39,28 @@ class offrecontroller extends Controller
             'type' => 'required',
         ]);
 
-        switch ($data['type']) {
-            case 'CDI':
-                $data['ref_type'] = '1';
-                break;
-            case 'CDD':
-                $data['ref_type'] = '2';
-                break;
-            case 'apprentissage':
-                $data['ref_type'] = '3';
-                break;
-            case 'stage':
-                $data['ref_type'] = '4';
-                break;
-            default:
-                $data['ref_type'] = '';
-                break;
-        }
+        $newType = new Type([
+            'libelle' => $data['type'],
+            'valide' => 0,
+        ]);
 
-        $newOffre = Offre::create($data);
+        $newType->save();
+
+        $newOffre = new Offre([
+            'titre' => $data['titre'],
+            'description' => $data['description'],
+            'valide' => 0,
+            'ref_type' => $newType->id,
+        ]);
+
+        $newOffre->save();
 
         return redirect(route('offre.index'));
     }
+
+
+
+
 
 
     /**
@@ -81,38 +83,28 @@ class offrecontroller extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(offre $offre, Request $request){
+    public function update(Offre $offre, Request $request)
+    {
         $data = $request->validate([
             'titre' => 'required',
             'description' => 'required',
             'type' => 'required',
             'etat' => 'required'
-
         ]);
 
-        switch ($data['type']) {
-            case 'CDI':
-                $data['ref_type'] = '1';
-                break;
-            case 'CDD':
-                $data['ref_type'] = '2';
-                break;
-            case 'apprentissage':
-                $data['ref_type'] = '3';
-                break;
-            case 'stage':
-                $data['ref_type'] = '4';
-                break;
-            default:
-                $data['ref_type'] = '';
-                break;
+        $typeActuel = $offre->type;
+
+        if ($typeActuel) {
+            $typeActuel->libelle = $data['type'];
+            $typeActuel->save();
         }
 
         $offre->update($data);
 
-        return redirect(route('offre.index'))->with('confirmation', 'Offre bien modifié!');
 
+        return redirect(route('offre.index'))->with('confirmation', 'Offre bien modifié!');
     }
+
 
     /**
      * Remove the specified resource from storage.
