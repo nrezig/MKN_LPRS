@@ -53,6 +53,13 @@ Route::post('/offre/store', [\App\Http\Controllers\offrecontroller::class, 'stor
 
 
 
+
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
