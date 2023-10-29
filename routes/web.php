@@ -52,3 +52,7 @@ Route::delete('/offre/{offre}/destroy', [offrecontroller::class, 'destroy'])->na
 Route::post('/offre/store', [\App\Http\Controllers\offrecontroller::class, 'store'])->name('offre.store');
 
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

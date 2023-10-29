@@ -26,7 +26,6 @@ class offre extends Model
 
     protected $attributes = [
         'etat' => 'à pourvoir',
-        'valide' => false,
     ];
 
 

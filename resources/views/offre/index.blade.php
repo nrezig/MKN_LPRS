@@ -40,7 +40,7 @@
                 <td>{{ $offre->description }}</td>
                 <td>{{ $offre->etat }}</td>
                 <td>
-                    @if ($offre->valide == 1)
+                    @if ($offre->type->valide == 1)
                         Valide
                     @else
                         Non

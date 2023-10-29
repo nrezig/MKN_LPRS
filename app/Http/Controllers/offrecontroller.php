@@ -15,53 +15,56 @@ class offrecontroller extends Controller
     public function index()
     {
         $offre = Offre::with('type')->get();
-        return view('offre.index',['offre'=>$offre ] );
+        $types = Type::all();
 
+
+        return view('offre.index', ['offre' => $offre, 'types' => $types]);
     }
-
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('offre.create');
+        $types = Type::all(); // Récupérez tous les types depuis la base de données
+
+        return view('offre.create', ['types' => $types]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $data = $request->validate([
             'titre' => 'required',
             'description' => 'required',
-            'type' => 'required',
+            'type' => 'required', // Le champ 'type' est requis
         ]);
 
-        $newType = new Type([
-            'libelle' => $data['type'],
-            'valide' => 0,
-        ]);
+        $refType = $data['type'];
 
-        $newType->save();
+        // Si le champ 'type' est "other", créez un nouveau type
+        if ($refType === 'other') {
+            // Assurez-vous d'avoir un champ pour le nouveau type dans votre formulaire
+            $newType = new Type([
+                'libelle' => $request->input('new_type'),
+                'valide' => 0,
+            ]);
+
+            $newType->save();
+
+            // Utilisez l'ID du nouveau type créé
+            $refType = $newType->id;
+        }
 
         $newOffre = new Offre([
             'titre' => $data['titre'],
             'description' => $data['description'],
-            'valide' => 0,
-            'ref_type' => $newType->id,
+            'ref_type' => $refType, // Utilisez l'ID du type
         ]);
 
         $newOffre->save();
 
         return redirect(route('offre.index'));
     }
-
-
-
-
-
 
     /**
      * Display the specified resource.
@@ -76,7 +79,8 @@ class offrecontroller extends Controller
      */
     public function edit(offre $offre)
     {
-        return view('offre.edit',['offre'=>$offre] );
+        $types = Type::all();
+        return view('offre.edit', ['offre' => $offre, 'types' => $types]);
 
     }
 
@@ -92,17 +96,31 @@ class offrecontroller extends Controller
             'etat' => 'required'
         ]);
 
-        $typeActuel = $offre->type;
+        $typeSelectionne = $data['type'];
 
-        if ($typeActuel) {
-            $typeActuel->libelle = $data['type'];
-            $typeActuel->save();
+        if ($typeSelectionne === 'other') {
+            // Si l'utilisateur a sélectionné "Autre", créez un nouveau type
+            $nouveauType = new Type([
+                'libelle' => $request->input('new_type'),
+                'valide' => true, // Vous pouvez définir la validation selon vos besoins
+            ]);
+            $nouveauType->save();
+
+            // Associez l'offre au nouveau type
+            $offre->type()->associate($nouveauType);
+        } else {
+            // Si l'utilisateur a sélectionné un type existant, mettez à jour le type actuel de l'offre
+            $offre->type_id = $typeSelectionne;
         }
 
-        $offre->update($data);
+        // Mettez à jour les autres champs de l'offre
+        $offre->titre = $data['titre'];
+        $offre->description = $data['description'];
+        $offre->etat = $data['etat'];
 
+        $offre->save();
 
-        return redirect(route('offre.index'))->with('confirmation', 'Offre bien modifié!');
+        return redirect(route('offre.index'))->with('confirmation', 'Offre bien modifiée!');
     }
 
 

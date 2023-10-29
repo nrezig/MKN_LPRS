@@ -15,6 +15,8 @@ class type extends Model
 
     protected $attributes = [
         'valide' => false,
+        'libelle' => "NUL",
+
     ];
 
 }
