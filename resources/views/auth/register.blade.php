@@ -1,6 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
+
+    @viteReactRefresh
+    @vite(['resources/js/Register.js'])
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("company").addEventListener("change", () => {
+                if (document.getElementById("company").checked) {
+                    document.getElementById("company_form").style.visibility = "visible";
+                } else {
+                    document.getElementById("company_form").style.visibility = "hidden";
+                }
+
+            });
+            document.addEventListener("DOMContentLoaded", () => {
+                document.getElementById("student").addEventListener("change", () => {
+                    if (document.getElementById("student").checked) {
+                        document.getElementById("student_form").style.visibility = "visible";
+                    } else {
+                        document.getElementById("student_form").style.visibility = "hidden";
+                    }
+
+                })
+            })
+        });
+    </script>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -10,6 +35,9 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
+                        <div>
+                             Rep_Entreprise : <input type="checkbox" id="company">
+                        </div >
 
                         <div class="row mb-3">
                             <label for="nom" class="col-md-4 col-form-label text-md-end">{{ __('Nom') }}</label>
@@ -73,6 +101,22 @@
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
+                        </div>
+
+                        <div id="company_form" style="visibility: hidden" class="row mb-3">
+                            <label for="nom" class="col-md-4 col-form-label text-md-end">{{ __('Rôle') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="rôle" type="text" class="form-control @error('rôle') is-invalid @enderror" name="nom" value="{{ old('rôle') }}" required autocomplete="rôle" autofocus>
+
+                                @error('rôle')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+
                         </div>
 
                         <div class="row mb-0">

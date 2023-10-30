@@ -41,7 +41,8 @@ Route::prefix('/rdv')->name('rdv.')->controller(\App\Http\Controllers\RdvControl
     Route::get('/create','create')->name('create');
     Route::post('/','store')->name('store');
     Route::get('/{rdv}/edit', 'edit')->name('edit');
-    Route::get('');
+    Route::get('/{rdv}/update', 'upadate')->name('update');
+    Route::delete('/{rdv}/destroy', 'destroy')->name('destroy');
 });
 
 Route::get('/offre', [\App\Http\Controllers\offrecontroller::class, 'index'])->name('offre.index');
