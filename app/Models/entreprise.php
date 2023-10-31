@@ -9,5 +9,17 @@ class entreprise extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nom', 'adresse', 'description'];
+    protected $table = 'entreprise';
+
+    protected $fillable = [
+        'nom',
+        'adresse',
+        'description',
+        'ref_user'
+    ];
+
+    public function user():BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }
