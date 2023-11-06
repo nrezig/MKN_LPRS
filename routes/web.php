@@ -16,8 +16,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
 Route::get('/testco', function () {
     try {
         DB::connection()->getPdo();
@@ -52,13 +50,18 @@ Route::put('/offre/{offre}/update', [\App\Http\Controllers\offrecontroller::clas
 Route::delete('/offre/{offre}/destroy', [offrecontroller::class, 'destroy'])->name('offre.destroy');
 Route::post('/offre/store', [\App\Http\Controllers\offrecontroller::class, 'store'])->name('offre.store');
 
-
-
+Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin.index');
+Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'show'])->name('admin.index');
 
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Auth::routes();
 
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
