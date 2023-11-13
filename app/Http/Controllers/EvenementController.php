@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\evenement;
+use App\Models\salle;
 use Illuminate\Http\Request;
 
 
@@ -47,9 +48,11 @@ class EvenementController extends Controller
             'nom' => 'required',
             'description' => 'required',
             'date' => 'required',
-            'heure'=>'duree'
+            'heure'=>'required',
+             'duree'=>'required'
         ]);
-         $newEvent = Evenement::create($data);
+
+          $event = Evenement::create($data);
         return redirect(route('evenement.index'));
     }
 
