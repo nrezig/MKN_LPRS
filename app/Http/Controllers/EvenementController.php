@@ -47,7 +47,8 @@ class EvenementController extends Controller
             'nom' => 'required',
             'description' => 'required',
             'date' => 'required',
-            'heure'=>'duree'
+            'heure'=>'duree',
+             auth()->user()->id=>'required'
         ]);
          $newEvent = Evenement::create($data);
         return redirect(route('evenement.index'));
