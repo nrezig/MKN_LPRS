@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-<h1>Créer un evenment</h1>
+<h1>Créer un evenement</h1>
 <form method="post" action="{{route('evenement.store')}}">
     @csrf
     @method('post')

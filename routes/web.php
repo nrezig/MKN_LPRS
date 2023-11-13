@@ -50,10 +50,8 @@ Route::put('/offre/{offre}/update', [\App\Http\Controllers\offrecontroller::clas
 Route::delete('/offre/{offre}/destroy', [offrecontroller::class, 'destroy'])->name('offre.destroy');
 Route::post('/offre/store', [\App\Http\Controllers\offrecontroller::class, 'store'])->name('offre.store');
 
-
 Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin.index');
 Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'show'])->name('admin.index');
-Route::post('/admin', [\App\Http\Controllers\AdminController::class, 'valider_user'])->name('admin.valider_user');
 
 
 Auth::routes();
