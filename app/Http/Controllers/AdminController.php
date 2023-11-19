@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\offre;
 use App\Models\type;
 use App\Models\User;
+use Illuminate\Http\Request;
+
 
 class AdminController extends Controller
 {
@@ -14,16 +16,16 @@ class AdminController extends Controller
     public function index()
     {
         $user = User::all();
-        return view('admin.index', ['user' => $user]);
+        return view('admin.index', compact('user'));
     }
 
-    public function valider_user()
+    public function valider_user(Request $request)
     {
-        $user = User::all();
-        $user->valide = 1;
-        $user->save();
-        return view('admin.index', ['user' => $user]);
+        $user = User::find($request->input("id"));
+        $user->update(['valide' => 1]);
+        return back();
     }
+
 
     public function show()
     {

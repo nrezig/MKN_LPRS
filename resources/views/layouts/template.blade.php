@@ -6,6 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/flowbite.min.css" rel="stylesheet" />
+    <style>
+        hr {
+            color: #333; /* Couleur de la barre horizontale */
+            background-color: #333; /* Couleur de fond de la barre horizontale */
+            height: 2px; /* Hauteur de la barre horizontale */
+            border: none; /* Supprime le bord par défaut */
+        }
+
+        h4 {
+            text-align: center;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
 <nav class="bg-white border-gray-200 dark:bg-gray-900">

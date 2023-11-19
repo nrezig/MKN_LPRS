@@ -9,6 +9,8 @@
         @endif
     </div>
 
+    <br>
+    <h4> Validation des Utilisateurs </h4>
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg container mx-auto mt-8" >
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"  >
@@ -54,15 +56,13 @@
                     </td>
 
                     <td class="px-6 py-4">
-                        <form action="{{ route('admin.valider_user', ['user' => $user]) }}" method="POST">
+                        <form action="{{ route('admin.valider_user')}}" method="POST">
                             @csrf
+                            <input type="hidden" name="id" value="{{$users->id}}">
                             <input type="hidden" name="_method" value="POST">
                             <input class="font-medium text-blue-600 dark:text-blue-500 hover:underline" type="submit" value="Valider" />
                         </form>
                     </td>
-
-
-
                 </tr>
             @endforeach
             </tbody>

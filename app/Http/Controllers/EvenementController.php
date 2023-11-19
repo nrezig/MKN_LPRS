@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\admin;
 use App\Models\evenement;
 use App\Models\salle;
 use Illuminate\Http\Request;
@@ -37,6 +38,11 @@ class EvenementController extends Controller
     {
         $evenement = Evenement::all();
         return view('evenement.index',['evenement'=>$evenement ]);
+    }
+    public function admin_index()
+    {
+        $evenement = Evenement::all();
+        return view('admin.index',['evenement'=>$evenement] );
     }
 
     /**

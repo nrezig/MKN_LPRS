@@ -13,6 +13,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $primaryKey = 'id';
+
     protected $table = 'users';
 
 
@@ -56,5 +58,9 @@ class User extends Authenticatable
 
     public function entreprise(): HasOne{
         return $this->hasOne(entreprise::class, "ref_user");
+    }
+
+    public function rep_entreprise(): HasOne{
+        return $this->hasOne(rep_entreprise::class, "ref_user");
     }
 }
