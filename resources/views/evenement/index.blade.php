@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Liste des Evenements</title>
-</head>
-<body>
-<h1>Liste des Evenements</h1>
-
+@extends("layouts.template")
+@section("content")
 <div>
     @if(session()->has('confirmation'))
         <div>
@@ -17,44 +8,71 @@
     @endif
 </div>
 
-<div>
-    <a href="{{route('evenement.create')}}">Ajout d'un evenement</a>
-</div>
-
-<div>
-    <table border="1">
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg container mx-auto mt-8" >
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"  >
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
-
-            <th>Nom</th>
-            <th>Description</th>
-            <th>Date</th>
-            <th>Heure</th>
-            <th>Duree</th>
-            <th>Modifier</th>
-            <th>Supprimer</th>
-
-
+            <th scope="col" class="px-6 py-3">
+                Nom
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Description
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Date
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Heure
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Duree
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Ajouter
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Modifier
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Supprimer
+            </th>
         </tr>
+        </thead>
+        <tbody>
         @foreach($evenement as $evenement)
-            <tr>
-                <td>{{ $evenement->nom }}</td>
-                <td>{{ $evenement->description }}</td>
-                <td>{{ $evenement->date }}</td>
-                <td>{{$evenement->heure}}</td>
-                <td>{{$evenement->duree}}</td>
-                <td>
-                    <a href ="{{route('evenement.edit',['evenement'=>$evenement])}}">Modifier</a>
+            <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{ $evenement->nom }}
+                </th>
+                <td class="px-6 py-4">
+                    {{ $evenement->description }}
                 </td>
-                <td>
+                <td class="px-6 py-4">
+                    {{ $evenement->date }}
+                </td>
+                <td class="px-6 py-4">
+                    {{$evenement->heure}}
+                </td>
+                <td class="px-6 py-4">
+                    {{$evenement->duree}}
+                </td>
+                <td class="px-6 py-4 ">
+                    <a href="{{route('evenement.create')}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Ajouter</a>
+                </td>
+                <td class="px-6 py-4 ">
+                    <a href="{{route('evenement.edit',['evenement'=>$evenement])}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifier</a>
+                </td>
+                <td class="px-6 py-4 ">
                     <form method="post" action="{{route('evenement.destroy', ['evenement' => $evenement])}}">
                         @csrf
                         @method('delete')
-                        <input type="submit" value="Supprimer" />
+                        <input class="font-medium text-blue-600 dark:text-blue-500 hover:underline" type="submit" value="Supprimer" />
                     </form>
                 </td>
             </tr>
         @endforeach
+        </tbody>
     </table>
 </div>
-</body>
-</html>
+
+@endsection

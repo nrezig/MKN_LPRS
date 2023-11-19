@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-<h1>Créer un evenment</h1>
+<h1>Créer un evenement</h1>
 <form method="post" action="{{route('evenement.store')}}">
     @csrf
     @method('post')
@@ -35,7 +35,7 @@
 
     <div>
         <label>Duree</label>
-        <input type="text" name="duree" placeholder="duree" pattern="[0-23]{2}:[0-60]{2}:[0-60]{2}">
+        <input type="text" name="duree" placeholder="duree" pattern="[0-23]{2}:[0-60]{2}">
     </div>
 
     <div>

@@ -9,6 +9,8 @@
         @endif
     </div>
 
+    <br>
+    <h4> Validation des Utilisateurs </h4>
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg container mx-auto mt-8" >
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"  >
@@ -18,67 +20,47 @@
                     ID
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Titre
+                    Nom
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Type
+                    Prénom
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Description
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Statut
+                    Email
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Valide
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Ajouter
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Modifier
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Supprimer
+                    Valider
                 </th>
             </tr>
             </thead>
             <tbody>
-            @foreach($offres as $offre)
+            @foreach($user as $users)
                 <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {{ $offre->id }}
+                        {{ $users->id }}
                     </th>
                     <td class="px-6 py-4">
-                        {{ $offre->titre }}
+                        {{ $users->nom }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ $offre->type->libelle }}
+                        {{ $users->prenom }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ $offre->description }}
+                        {{ $users->email }}
                     </td>
+                    <td class="px-6 py-4" align="center">
+                        {{ $users->valide }}
+                    </td>
+
                     <td class="px-6 py-4">
-                        {{ $offre->etat }}
-                    </td>
-                    <td class="px-6 py-4">
-                        @if ($offre->type->valide == 1)
-                            Valide
-                        @else
-                            Non
-                        @endif
-                    </td>
-                    <td class="px-6 py-4 ">
-                        <a href="{{ route('offre.create') }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Ajouter</a>
-                    </td>
-                    <td class="px-6 py-4 ">
-                        <a href="{{ route('offre.edit', ['offre' => $offre]) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifier</a>
-                    </td>
-                    <td class="px-6 py-4 ">
-                        <form method="post" action="{{ route('offre.destroy', ['offre' => $offre]) }}">
+                        <form action="{{ route('admin.valider_user')}}" method="POST">
                             @csrf
-                            @method('delete')
-                            <input class="font-medium text-blue-600 dark:text-blue-500 hover:underline" type="submit" value="Supprimer" />
+                            <input type="hidden" name="id" value="{{$users->id}}">
+                            <input type="hidden" name="_method" value="POST">
+                            <input class="font-medium text-blue-600 dark:text-blue-500 hover:underline" type="submit" value="Valider" />
                         </form>
                     </td>
                 </tr>

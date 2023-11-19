@@ -66,12 +66,15 @@ Route::post('/etudiant/candidater/{offre}', [CandidatureController::class, 'cand
 
 
 Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin.index');
+Route::get('/admin', [\App\Http\Controllers\EvenementController::class, 'admin_index'])->name('admin.index');
 Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'show'])->name('admin.index');
+Route::post('/admin', [\App\Http\Controllers\AdminController::class, 'valider_user'])->name('admin.valider_user');
 
+Route::view('/home_n', 'home_n')->name('home_n');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(\App\Http\Middleware\connexion::class);
 
 Auth::routes();
 

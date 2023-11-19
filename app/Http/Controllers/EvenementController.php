@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\admin;
 use App\Models\evenement;
+use App\Models\salle;
 use Illuminate\Http\Request;
 
 
@@ -37,6 +39,11 @@ class EvenementController extends Controller
         $evenement = Evenement::all();
         return view('evenement.index',['evenement'=>$evenement ]);
     }
+    public function admin_index()
+    {
+        $evenement = Evenement::all();
+        return view('admin.index',['evenement'=>$evenement] );
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -47,9 +54,11 @@ class EvenementController extends Controller
             'nom' => 'required',
             'description' => 'required',
             'date' => 'required',
-            'heure'=>'duree'
+            'heure'=>'required',
+             'duree'=>'required'
         ]);
-         $newEvent = Evenement::create($data);
+
+          $event = Evenement::create($data);
         return redirect(route('evenement.index'));
     }
 
