@@ -5,6 +5,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class salle extends Model{
+    protected $table = 'salle';
     use HasFactory;
-    protected $fillable = ['nom', 'nb_place', 'disponibilite'];
+    protected $fillable = ['nom', 'capacite', 'disponibilite'];
+
+
 }

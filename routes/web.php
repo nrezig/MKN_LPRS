@@ -36,6 +36,15 @@ Route::prefix('/evenement')->name('evenement.')->controller(\App\Http\Controller
     Route::delete('/{evenement}/destroy',  'destroy')->name('destroy');
 });
 
+Route::prefix('/salle')->name('salle.')->controller(\App\Http\Controllers\SalleController::class)->group(function(){
+    Route::get('/', 'index')->name('index');
+    Route::get('/create',  'create')->name('create');
+    Route::post('/',  'store')->name('store');
+    Route::get('/{salle}/edit',  'edit')->name('edit');
+    Route::put('/{salle}/update', 'update')->name('update');
+    Route::delete('/{salle}/destroy',  'destroy')->name('destroy');
+});
+
 Route::prefix('/rdv')->name('rdv.')->controller(\App\Http\Controllers\RdvController::class)->group(function (){
     Route::get('/','index')->name('index');
     Route::get('/create','create')->name('create');
