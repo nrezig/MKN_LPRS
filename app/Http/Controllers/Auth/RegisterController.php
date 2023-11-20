@@ -105,7 +105,10 @@ class RegisterController extends Controller
             $User->entreprise()->create([
                 'nom' => $data['nom_ent'],
                 'adresse' => $data['adresse_ent'],
-                'description' => $data['description_ent'],
+                'description' => $data['description_ent'],]);
+            $User->rep_entreprise()->create([
+                    'role' => $data['role'],
+                    'ref_entreprise' => $User->entreprise->id
             ]);
         }
         return $User;

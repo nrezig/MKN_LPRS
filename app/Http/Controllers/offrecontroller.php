@@ -23,6 +23,7 @@ class offrecontroller extends Controller
 
     public function offrecomplet() {
         $offre = Offre::all();
+        $types = Type::all();
 
         return view('offre.index', ['offre' => $offre, 'types' => $types]);
     }

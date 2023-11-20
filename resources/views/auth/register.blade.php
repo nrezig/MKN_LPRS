@@ -129,7 +129,9 @@
                             </div>
                         </div>
 
-                        <div id="company_form" style="display: none" class="row mb-3">
+
+
+                        < id="company_form" style="display: none" class="row mb-3">
                             <br>
                             <div class="row mb-3">
                             <label for="nom" class="col-md-4 col-form-label text-md-end">{{ __("Nom de votre entreprise") }}</label>
@@ -170,6 +172,20 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="nom" class="col-md-4 col-form-label text-md-end">{{ __("Rôle") }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="role" type="text" class="form-control @error('role') is-invalid @enderror" name="role" value="{{ old('role') }}"  autocomplete="role" autofocus>
+
+                                    @error('role')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>

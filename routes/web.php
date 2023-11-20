@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\offrecontroller;
+use App\Http\Controllers\EtudiantController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,9 +52,29 @@ Route::put('/offre/{offre}/update', [\App\Http\Controllers\offrecontroller::clas
 Route::delete('/offre/{offre}/destroy', [offrecontroller::class, 'destroy'])->name('offre.destroy');
 Route::post('/offre/store', [\App\Http\Controllers\offrecontroller::class, 'store'])->name('offre.store');
 
+
+use App\Http\Controllers\CandidatureController;
+
+// Afficher la liste des offres
+Route::get('/etudiant/offres', [CandidatureController::class, 'viewoffre'])->name('etudiant.offres');
+
+// Afficher les détails d'une offre
+Route::get('/etudiant/offres/{id}', [CandidatureController::class, 'viewdetailoffre'])->name('etudiant.detailoffre');
+
+// Candidater à une offre
+Route::post('/etudiant/candidater/{offre}', [CandidatureController::class, 'candidater'])->name('etudiant.candidater');
+
+
 Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin.index');
+Route::get('/admin', [\App\Http\Controllers\EvenementController::class, 'admin_index'])->name('admin.index');
 Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'show'])->name('admin.index');
+Route::post('/admin', [\App\Http\Controllers\AdminController::class, 'valider_user'])->name('admin.valider_user');
 
+Route::view('/home_n', 'home_n')->name('home_n');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(\App\Http\Middleware\connexion::class);
 
 Auth::routes();
 
@@ -62,6 +84,4 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
