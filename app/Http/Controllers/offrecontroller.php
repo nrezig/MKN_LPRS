@@ -21,6 +21,13 @@ class offrecontroller extends Controller
         return view('offre.index', ['offre' => $offre, 'types' => $types]);
     }
 
+    public function offrecomplet() {
+        $offre = Offre::all();
+
+        return view('offre.index', ['offre' => $offre, 'types' => $types]);
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
@@ -73,6 +80,7 @@ class offrecontroller extends Controller
     {
 
     }
+
 
     /**
      * Show the form for editing the specified resource.
