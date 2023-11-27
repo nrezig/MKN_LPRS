@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -58,8 +59,9 @@ class RegisterController extends Controller
             'prenom' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'dom_etude' => ['required', 'string', 'max:255'],
             'role' => ['required'],
+            'dom_etude' => ['string', 'max:255'],
+            'dom_etude2' => ['string', 'max:255'],
             ]);
          } else {
             return Validator::make($data, [
@@ -67,10 +69,9 @@ class RegisterController extends Controller
                 'prenom' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
-                'nom_ent' => ['required', 'string', 'max:255'],
-                'adresse_ent' => ['required', 'string', 'max:255'],
-                'description_ent' => ['required', 'string', 'max:255'],
-                'role' => ['required'], ]);
+                'role' => ['required'],
+                'poste' => ['required', 'string', 'max:255'],
+            ]);
         }
     }
 
@@ -83,17 +84,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        if(isset($data['dom_etude'])){
-            $User=User::create([
-            'nom' => $data['nom'],
-            'prenom' => $data['prenom'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'valide' => 0,
-            'role' => $data['role'] ]);
-        $User->etudiant()->create([
-            'domaine_etude' => $data['dom_etude'],
-        ]);
+        if (isset($data['dom_etude'])) {
+            $User = User::create([
+                'nom' => $data['nom'],
+                'prenom' => $data['prenom'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'valide' => 0,
+                'role' => $data['role']]);
+            $User->etudiant()->create([
+                'domaine_etude' =>$data['dom_etude'] == "autre" ? $data['dom_etude2']:$data['dom_etude'],
+            ]);
         } else {
             $User=User::create([
                 'nom' => $data['nom'],
@@ -102,15 +103,50 @@ class RegisterController extends Controller
                 'password' => Hash::make($data['password']),
                 'valide' => 0,
                 'role' => $data['role'] ]);
-            $User->entreprise()->create([
-                'nom' => $data['nom_ent'],
-                'adresse' => $data['adresse_ent'],
-                'description' => $data['description_ent'],]);
             $User->rep_entreprise()->create([
-                    'role' => $data['role'],
-                    'ref_entreprise' => $User->entreprise->id
+                'poste' => $data['poste'],
+                'role' => $data['role'],
             ]);
+            if($data['entreprise'] == "autre"){
+                $User->rep_entreprise->entreprise()->create([
+                    'nom' => $data['nom_ent'],
+                    'adresse' => $data['adresse_ent'],
+                    'description' => $data['description_ent'],]);
+            }else{
+                $User->rep_entreprise->ref_entreprise=$data['entreprise'];
+                $User->save();
+            }
         }
-        return $User;
+            return $User;
+        }
+
+    public function showRegistrationForm()
+    {
+        $entreprise = Entreprise::all(); // Récupérez toutes les entreprises
+        return view('auth.register', compact('entreprise'));
     }
 }
+
+/**
+ $User=User::create([
+'nom' => $data['nom'],
+'prenom' => $data['prenom'],
+'email' => $data['email'],
+'password' => Hash::make($data['password']),
+'valide' => 0,
+'role' => $data['role'] ]);
+
+
+ User->rep_entreprise()->create([
+'poste' => $data['poste']]);
+
+
+$User->rep_entreprise->entreprise()->create([
+'nom' => $data['nom_ent'],
+'adresse' => $data['adresse_ent'],
+'description' => $data['description_ent'],]);
+}
+
+
+return $User;
+ */

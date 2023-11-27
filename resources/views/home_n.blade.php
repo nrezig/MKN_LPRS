@@ -1,4 +1,4 @@
-<h1>Vous n'êtes pas accepter</h1>
+<h1>Compte en cours de validation</h1>
 
 @auth
     @if (session('status'))
@@ -8,7 +8,8 @@
     @endif
     <a class="dropdown-item" href="{{ route('logout') }}"
        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+
+                                                    document.getElementById('logout-form').submit();">
         {{ __('Logout') }}
     </a>
 
