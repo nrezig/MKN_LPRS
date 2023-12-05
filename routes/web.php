@@ -62,15 +62,10 @@ Route::delete('/offre/{offre}/destroy', [offrecontroller::class, 'destroy'])->na
 Route::post('/offre/store', [\App\Http\Controllers\offrecontroller::class, 'store'])->name('offre.store');
 
 
-use App\Http\Controllers\CandidatureController;
-
-// Afficher la liste des offres
 Route::get('/etudiant/offres', [CandidatureController::class, 'viewoffre'])->name('etudiant.offres');
 
-// Afficher les détails d'une offre
 Route::get('/etudiant/offres/{id}', [CandidatureController::class, 'viewdetailoffre'])->name('etudiant.detailoffre');
 
-// Candidater à une offre
 Route::post('/etudiant/candidater/{offre}', [CandidatureController::class, 'candidater'])->name('etudiant.candidater');
 
 
@@ -78,6 +73,27 @@ Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->n
 Route::get('/admin', [\App\Http\Controllers\EvenementController::class, 'admin_index'])->name('admin.index');
 Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'show'])->name('admin.index');
 Route::post('/admin', [\App\Http\Controllers\AdminController::class, 'valider_user'])->name('admin.valider_user');
+
+Route::get('/admin/adashboard', function () { return view('admin/adashboard');});
+Route::get('/admin/gestiontype', function () { return view('admin/gestiontype');});
+Route::put('/types/{type}/valider', [\App\Http\Controllers\TypeController::class, 'valider'])->name('types.valider');
+Route::delete('/types/{type}', [\App\Http\Controllers\TypeController::class, 'destroy'])->name('types.destroy');
+
+Route::put('/types/{type}/valider', [\App\Http\Controllers\typecontroller::class, 'valider'])->name('types.valider');
+Route::delete('/types/{type}/destroy', [\App\Http\Controllers\typecontroller::class, 'destroy'])->name('types.destroy');
+Route::delete('types/{type}/delete', [\App\Http\Controllers\typecontroller::class, 'delete'])->name('types.delete');
+Route::get('types/{type}/assign-new-type', [\App\Http\Controllers\typecontroller::class, 'assignNewType'])->name('types.assignNewType');
+Route::delete('types/{type}/delete-offers', [\App\Http\Controllers\typecontroller::class, 'deleteOffers'])->name('types.deleteOffers');
+
+
+Route::get('/admin/createtype', [\App\Http\Controllers\typecontroller::class, 'create'])->name('types.create');
+Route::post('/admin/createtype', [\App\Http\Controllers\typecontroller::class, 'store'])->name('types.store');
+Route::get('/admin/gestiontype', [\App\Http\Controllers\typecontroller::class, 'index'])->name('admin.gestiontype');
+Route::get('/admin/attributionnewtype/{type}', [\App\Http\Controllers\typecontroller::class, 'attributionNewType'])
+    ->name('types.attributionnewtype');
+
+Route::post('/admin/attributionnewtype/{type}', [\App\Http\Controllers\typecontroller::class, 'processAttributionNewType'])
+    ->name('types.process-attributionnewtype');
 
 Route::view('/home_n', 'home_n')->name('home_n');
 

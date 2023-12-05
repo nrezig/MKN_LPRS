@@ -11,12 +11,18 @@ class type extends Model
 
     protected $table = 'type';
 
-    protected $fillable = ['libelle'];
+    protected $fillable = ['libelle', 'valide'];
 
     protected $attributes = [
         'valide' => false,
         'libelle' => "NUL",
 
     ];
+
+
+    public function offres()
+    {
+        return $this->hasMany(Offre::class, 'ref_type');
+    }
 
 }
