@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\offrecontroller;
 use App\Http\Controllers\EtudiantController;
+use App\Http\Controllers\offrecontroller;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -54,19 +55,29 @@ Route::prefix('/rdv')->name('rdv.')->controller(\App\Http\Controllers\RdvControl
     Route::delete('/{rdv}/destroy', 'destroy')->name('destroy');
 });
 
-Route::get('/offre', [\App\Http\Controllers\offrecontroller::class, 'index'])->name('offre.index');
-Route::get('/offre/create', [\App\Http\Controllers\offrecontroller::class, 'create'])->name('offre.create');
-Route::get('/offre/{offre}/edit', [\App\Http\Controllers\offrecontroller::class, 'edit'])->name('offre.edit');
-Route::put('/offre/{offre}/update', [\App\Http\Controllers\offrecontroller::class, 'update'])->name('offre.update');
-Route::delete('/offre/{offre}/destroy', [offrecontroller::class, 'destroy'])->name('offre.destroy');
-Route::post('/offre/store', [\App\Http\Controllers\offrecontroller::class, 'store'])->name('offre.store');
+Route::middleware(['auth', 'Entreprise', 'valideUser'])->group(function () {
 
+    Route::get('/entreprise/gestionoffre', [OffreController::class, 'index'])->name('entreprise.gestionoffre');
+    Route::get('/entreprise/offrecomplet', [OffreController::class, 'offrecomplet'])->name('entreprise.offrecomplet');
+    Route::get('/entreprise/createoffre', [OffreController::class, 'create'])->name('entreprise.createoffre');
+    Route::post('/entreprise/storeoffre', [OffreController::class, 'store'])->name('entreprise.offre.store');
+    Route::get('/entreprise/editoffre/{offre}', [OffreController::class, 'edit'])->name('entreprise.editoffre');
+    Route::put('/entreprise/updateoffre/{offre}', [OffreController::class, 'update'])->name('entreprise.offre.update');
+    Route::delete('/entreprise/destroyoffre/{offre}', [OffreController::class, 'destroy'])->name('entreprise.offre.destroy');
+});
 
-Route::get('/etudiant/offres', [CandidatureController::class, 'viewoffre'])->name('etudiant.offres');
+Route::middleware(['auth', 'Admin', 'valideUser'])->group(function () {
 
-Route::get('/etudiant/offres/{id}', [CandidatureController::class, 'viewdetailoffre'])->name('etudiant.detailoffre');
+    Route::get('/admin/agestionoffre', [offrecontroller::class, 'index'])->name('admin.gestionoffre');
+    Route::get('/admin/offres/{offre}/edit', [offrecontroller::class, 'edit'])->name('admin.aeditoffre');
+    Route::delete('/admin/offres/{offre}', [offrecontroller::class, 'destroy'])->name('admin.offre.destroy');
+});
 
-Route::post('/etudiant/candidater/{offre}', [CandidatureController::class, 'candidater'])->name('etudiant.candidater');
+Route::get('/etudiant/offres', [\App\Http\Controllers\candidaturecontroller::class, 'viewoffre'])->name('etudiant.offres');
+
+Route::get('/etudiant/offres/{id}', [\App\Http\Controllers\candidaturecontroller::class, 'viewdetailoffre'])->name('etudiant.detailoffre');
+
+Route::post('/etudiant/candidater/{offre}', [\App\Http\Controllers\candidaturecontroller::class, 'candidater'])->name('etudiant.candidater');
 
 
 Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin.index');
@@ -92,8 +103,14 @@ Route::get('/admin/gestiontype', [\App\Http\Controllers\typecontroller::class, '
 Route::get('/admin/attributionnewtype/{type}', [\App\Http\Controllers\typecontroller::class, 'attributionNewType'])
     ->name('types.attributionnewtype');
 
+
+
 Route::post('/admin/attributionnewtype/{type}', [\App\Http\Controllers\typecontroller::class, 'processAttributionNewType'])
     ->name('types.process-attributionnewtype');
+
+
+
+
 
 Route::view('/home_n', 'home_n')->name('home_n');
 
