@@ -17,7 +17,7 @@ class SalleController extends Controller
      */
     public function create()
     {
-        return view('salle.create');
+        return view('admin.createsalle');
     }
     /**
      * Display the specified resource.
@@ -27,7 +27,7 @@ class SalleController extends Controller
      */
     public function edit(salle $salle)
     {
-        return view('salle.edit',['salle'=>$salle] );
+        return view('admin.editsalle',['salle'=>$salle] );
 
     }
     /**
@@ -36,7 +36,7 @@ class SalleController extends Controller
     public function index()
     {
         $salle = salle::all();
-        return view('salle.index',['salle'=>$salle ]);
+        return view('admin.gestionsalle',['salle'=>$salle ]);
     }
 
     /**
@@ -48,9 +48,11 @@ class SalleController extends Controller
             'nom' => 'required',
             'capacite' => 'required'
         ]);
+        $data['disponibilite'] = 1;
 
-          salle::create($data);
-        return redirect(route('salle.index'));
+        salle::create($data);
+        return redirect('admin/gestionevent')->with('success', 'Salle créée avec succès');
+
     }
 
     /**
@@ -68,12 +70,16 @@ class SalleController extends Controller
     {
         $data = $request->validate([
             'nom' => 'required',
-            'capacite' => 'required',
-            'disponibilite' => 1
+            'capacite' => 'required|integer',
         ]);
-        $salle->update($data);
 
-        return redirect(route('salle.index'))->with('confirmation', 'La salle a bien été modifié!');
+        $salle->nom = $data['nom'];
+        $salle->capacite = $data['capacite'];
+        $salle->disponibilite = 1;
+
+        $salle->save();
+
+        return redirect(route('admin.gestionsalle'))->with('confirmation', 'La salle a bien été modifiée !');
     }
 
     /**

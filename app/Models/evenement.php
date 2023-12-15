@@ -21,4 +21,6 @@ class evenement extends Model{
         return $this->belongsTo(admin::class, 'ref_admin');
     }
 
+
+
 }

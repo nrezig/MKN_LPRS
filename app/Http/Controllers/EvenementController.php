@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\admin;
+use App\Models\Etudiant;
 use App\Models\evenement;
+use App\Models\Inscription;
 use App\Models\salle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class EvenementController extends Controller
@@ -95,5 +99,100 @@ class EvenementController extends Controller
         $evenement->delete();
         return redirect(route('evenement.index'))->with('confirmation', 'Evenement a bien été supprimé !');
     }
+
+    public function showevenement()
+    {
+        $user = Auth::user();
+
+        $evenements = Evenement::with('salle')->get();
+        $salles = Salle::all();
+
+            return view('etudiant.evenements', compact('evenements', 'salles'));
+
+    }
+
+    public function detailEvenement($id)
+    {
+        $evenement = Evenement::find($id);
+        return view('etudiant.detailEvenement', ['evenement' => $evenement]);
+    }
+
+    public function inscrireEvenement(Request $request, $evenementId)
+    {
+        $userId = auth()->user()->id;
+        $etudiantId = Etudiant::where('ref_user', $userId)->first()->id;
+
+        $dejaInscrit = Inscription::where('ref_etudiant', $etudiantId)->where('ref_evenement', $evenementId)->exists();
+
+        if ($dejaInscrit) {
+            return redirect()->route('etudiant.evenement')->with('error', 'Déjà inscrit');
+
+        }
+
+        Inscription::create([
+            'ref_etudiant' => $etudiantId,
+            'ref_evenement' => $evenementId
+        ]);
+
+        return redirect()->route('etudiant.evenement')->with('success', 'Inscription réussie !');
+    }
+
+    public function mesEvenements()
+    {
+        $userId = auth()->user()->id;
+        $etudiantId = Etudiant::where('ref_user', $userId)->first()->id;
+
+        $evenementsInscrits = Inscription::where('ref_etudiant', $etudiantId)
+            ->with('evenement')
+            ->get()
+            ->pluck('evenement');
+
+        return view('etudiant.mesEvenements', ['evenements' => $evenementsInscrits]);
+    }
+
+    public function desinscrireEvenement($evenementId)
+    {
+        $userId = auth()->user()->id;
+        $etudiantId = Etudiant::where('ref_user', $userId)->first()->id;
+
+        Inscription::where('ref_etudiant', $etudiantId)
+            ->where('ref_evenement', $evenementId)
+            ->delete();
+
+        return redirect()->route('etudiant.mesEvenements')->with('success', 'Désinscription réussie.');
+    }
+
+
+    public function validerEvenement($evenementId)
+    {
+        $evenement = Evenement::findOrFail($evenementId);
+        $evenement->valide = true;
+        $evenement->save();
+
+        return redirect()->route('admin.evenement')->with('success', 'Événement validé avec succès.');
+    }
+
+
+
+
+
+
+
+
+
+
+
+    public function attribuerSalle(Request $request, $evenementId)
+    {
+        $evenement = Evenement::find($evenementId);
+        $evenement->ref_salle = $request->salle_id;
+        $evenement->save();
+
+        return redirect('admin/gestionevent')->with('success', 'Salle attribuée avec succès');
+    }
+
+
+
+
 
 }
