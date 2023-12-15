@@ -2,143 +2,172 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\offre;
-use App\Models\type;
+use App\Models\candidature;
+use App\Models\entreprise;
+use App\Models\Offre;
+use App\Models\Type;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 
 class offrecontroller extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        $offre = Offre::with('type')->get();
-        $types = Type::all();
+        $user = Auth::user();
 
+        if ($user->role === 'Admin') {
+            $offres = Offre::with(['type', 'entreprise'])->get();
+            $types = Type::all();
 
-        return view('offre.index', ['offre' => $offre, 'types' => $types]);
+            return view('admin.agestionoffre', ['offre' => $offres, 'types' => $types]);
+        } elseif ($user->role === 'Entreprise') {
+            $offres = $user->rep_entreprise->offres()->with('type')->get();
+            $types = Type::all();
+
+            return view('entreprise.gestionoffre', ['offre' => $offres, 'types' => $types]);
+        }
+
+        abort(403, 'Accès non autorisé');
     }
 
-    public function offrecomplet() {
-        $offre = Offre::all();
-        $types = Type::all();
-
-        return view('offre.index', ['offre' => $offre, 'types' => $types]);
-    }
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        $types = Type::all(); // Récupérez tous les types depuis la base de données
+        $user = Auth::user();
+        $types = Type::all();
 
-        return view('offre.create', ['types' => $types]);
+        if ($user->role === 'Admin') {
+            return view('admin.acreateoffre', ['types' => $types]);
+        } elseif ($user->role === 'Entreprise') {
+            return view('entreprise.createoffre', ['types' => $types]);
+        }
+
+        abort(403, 'Accès non autorisé');
     }
 
     public function store(Request $request)
     {
+        $user = Auth::user();
         $data = $request->validate([
             'titre' => 'required',
             'description' => 'required',
-            'type' => 'required', // Le champ 'type' est requis
+            'type' => 'required',
         ]);
 
         $refType = $data['type'];
 
-        // Si le champ 'type' est "other", créez un nouveau type
         if ($refType === 'other') {
-            // Assurez-vous d'avoir un champ pour le nouveau type dans votre formulaire
             $newType = new Type([
                 'libelle' => $request->input('new_type'),
                 'valide' => 0,
             ]);
 
             $newType->save();
-
-            // Utilisez l'ID du nouveau type créé
             $refType = $newType->id;
         }
 
-        $newOffre = new Offre([
-            'titre' => $data['titre'],
-            'description' => $data['description'],
-            'ref_type' => $refType, // Utilisez l'ID du type
-        ]);
+        if ($user->role === 'Admin') {
+            $entrepriseId = $request->input('ref_entreprise');
 
-        $newOffre->save();
+            $newOffre = new Offre([
+                'titre' => $data['titre'],
+                'description' => $data['description'],
+                'ref_type' => $refType,
+                'ref_entreprise' => $entrepriseId,
+            ]);
 
-        return redirect(route('offre.index'));
+            $newOffre->save();
+
+            return redirect(route('admin.gestionoffre'));
+        }
+
+        elseif ($user->role === 'Entreprise') {
+            $entrepriseId = $user->rep_entreprise->ref_entreprise;
+            $newOffre = new Offre([
+                'titre' => $data['titre'],
+                'description' => $data['description'],
+                'ref_type' => $refType,
+                'ref_entreprise' => $entrepriseId,
+
+            ]);
+
+            $newOffre->save();
+
+            return redirect(route('entreprise.gestionoffre'));
+        }
+
+        abort(403, 'Accès non autorisé');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(offre $offre)
+    public function edit(Offre $offre)
     {
-
-    }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(offre $offre)
-    {
+        $user = Auth::user();
         $types = Type::all();
-        return view('offre.edit', ['offre' => $offre, 'types' => $types]);
 
+        if ($user->role === 'Admin') {
+            return view('admin.aeditoffre', ['offre' => $offre, 'types' => $types]);
+        } elseif ($user->role === 'Entreprise') {
+            return view('entreprise.editoffre', ['offre' => $offre, 'types' => $types]);
+
+        }
+
+        abort(403, 'Accès non autorisé');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Offre $offre, Request $request)
     {
+        $user = Auth::user();
         $data = $request->validate([
             'titre' => 'required',
             'description' => 'required',
             'type' => 'required',
-            'etat' => 'required'
+            'etat' => 'required',
         ]);
 
         $typeSelectionne = $data['type'];
 
         if ($typeSelectionne === 'other') {
-            // Si l'utilisateur a sélectionné "Autre", créez un nouveau type
             $nouveauType = new Type([
                 'libelle' => $request->input('new_type'),
-                'valide' => true, // Vous pouvez définir la validation selon vos besoins
+                'valide' => false,
             ]);
-            $nouveauType->save();
 
-            // Associez l'offre au nouveau type
+            $nouveauType->save();
             $offre->type()->associate($nouveauType);
         } else {
-            // Si l'utilisateur a sélectionné un type existant, mettez à jour le type actuel de l'offre
-            $offre->type_id = $typeSelectionne;
+            $offre->ref_type = $typeSelectionne;
         }
 
-        // Mettez à jour les autres champs de l'offre
         $offre->titre = $data['titre'];
         $offre->description = $data['description'];
         $offre->etat = $data['etat'];
 
-        $offre->save();
+        if ($user->role === 'Admin') {
+            $offre->save();
+            return redirect(route('admin.gestionoffre'))->with('confirmation', 'Offre bien modifiée!');
 
-        return redirect(route('offre.index'))->with('confirmation', 'Offre bien modifiée!');
+        } elseif ($user->role === 'Entreprise') {
+            $offre->save();
+            return redirect(route('entreprise.gestionoffre'))->with('confirmation', 'Offre bien modifiée!');
+        }
+
+        abort(403, 'Accès non autorisé');
     }
 
+    public function destroy(Offre $offre)
+    {
+        $user = Auth::user();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(offre $offre){
-        $offre->delete();
-        return redirect(route('offre.index'))->with('confirmation', 'Offre bien supprimé !');
+        if ($user->role === 'Admin') {
+            $offre->delete();
+            return redirect(route('admin.gestionoffre'))->with('confirmation', 'Offre bien supprimée !');
+        } elseif ($user->role === 'Entreprise') {
+            $offre->delete();
+            return redirect(route('entreprise.gestionoffre'))->with('confirmation', 'Offre bien supprimée !');
+        }
+
+        abort(403, 'Accès non autorisé');
     }
+
 
 }
