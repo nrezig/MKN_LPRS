@@ -10,9 +10,10 @@
     </div>
 
     @php
-    $offres = \App\Models\Offre::all();
+        $user = Auth::user();
+        $offres = \App\Models\Offre::where('ref_entreprise', $user->rep_entreprise->ref_entreprise)->with('type')->get();
+        $types = \App\Models\Type::all();
     @endphp
-
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg container mx-auto mt-8" >
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"  >
@@ -35,6 +36,9 @@
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Valide
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Candidatures
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Ajouter
@@ -72,14 +76,17 @@
                             Non
                         @endif
                     </td>
-                    <td class="px-6 py-4 ">
-                        <a href="{{ route('offre.create') }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Ajouter</a>
+                    <td class="px-6 py-4">
+                        <a href="{{ route('entreprise.viewcandidature', ['offre' => $offre->id]) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Voir Candidatures</a>
                     </td>
-                    <td class="px-6 py-4 ">
-                        <a href="{{ route('offre.edit', ['offre' => $offre]) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifier</a>
+                    <td class="px-6 py-4">
+                        <a href="{{ route('entreprise.createoffre') }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Ajouter</a>
                     </td>
-                    <td class="px-6 py-4 ">
-                        <form method="post" action="{{ route('offre.destroy', ['offre' => $offre]) }}">
+                    <td class="px-6 py-4">
+                        <a href="{{ route('entreprise.editoffre', ['offre' => $offre]) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifier</a>
+                    </td>
+                    <td class="px-6 py-4">
+                        <form method="post" action="{{ route('entreprise.offre.destroy', ['offre' => $offre]) }}">
                             @csrf
                             @method('delete')
                             <input class="font-medium text-blue-600 dark:text-blue-500 hover:underline" type="submit" value="Supprimer" />
@@ -92,4 +99,3 @@
     </div>
 
 @endsection
-

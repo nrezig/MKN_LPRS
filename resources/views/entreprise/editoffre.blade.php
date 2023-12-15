@@ -9,7 +9,8 @@
 </head>
 <body>
 <h1>Modifier une offre</h1>
-<form method="post" action="{{route('offre.update', ['offre' => $offre])}}">
+<form method="post" action="{{ route('entreprise.offre.update', ['offre' => $offre]) }}">
+
     @csrf
     @method('put')
 
