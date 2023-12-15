@@ -16,4 +16,9 @@ class candidature extends Model
     {
         return $this->belongsTo(Etudiant::class, 'ref_etudiant', 'id');
     }
+
+    public function offre()
+    {
+        return $this->belongsTo(Offre::class, 'ref_offre'); // Assurez-vous que 'ref_offre' est la clé étrangère correcte
+    }
 }

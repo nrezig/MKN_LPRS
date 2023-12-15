@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 
+
 use App\Models\offre;
 use App\Models\type;
 
@@ -17,48 +18,75 @@ use Illuminate\Http\Request;
 class candidaturecontroller extends Controller
 {
 
-    public function viewoffre()
+    public function viewoffre(Request $request)
     {
-        $offre = Offre::with('type')->get();
-        $types = Type::all();
+        $query = Offre::with(['type', 'entreprise']);
 
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('titre', 'LIKE', '%' . $search . '%');
+        }
 
-        return view('etudiant.offres', ['offre' => $offre, 'types' => $types]);
+        if ($request->has('type')) {
+            $types = $request->input('type');
+            $query->whereHas('type', function($q) use ($types) {
+                $q->whereIn('libelle', $types);
+            });
+        }
+
+        $offres = $query->get();
+
+        return view('etudiant.offres', ['offres' => $offres]);
     }
+
 
     public function viewdetailoffre($id)
     {
-        $offre = Offre::findOrFail($id); // Utilisez findOrFail pour gérer les cas où l'offre n'est pas trouvée
+        $offre = Offre::findOrFail($id);
         return view('etudiant.detailoffre', compact('offre'));
     }
 
 
 
-    
+
 
     public function candidater($offre)
     {
-        // Récupérez l'ID de l'utilisateur connecté
         $ref_user = Auth::id();
-
-        // Vérifiez si l'utilisateur est un étudiant
         $etudiant = Etudiant::where('ref_user', $ref_user)->first();
 
-        if (!$etudiant) {
-            // L'utilisateur n'est pas un étudiant
-            // Gérez cette situation en renvoyant un message d'erreur, en redirigeant, etc.
-            return redirect()->route('etudiant.offres')->with('error', 'Vous devez être un étudiant pour candidater.');
+        $candidatureExistante = Candidature::where('ref_etudiant', $etudiant->id)
+            ->where('ref_offre', $offre)
+            ->first();
+
+        if ($candidatureExistante) {
+            return redirect()->route('etudiant.offres')->with('error', 'Vous avez déjà candidaté à cette offre.');
         }
 
-        // L'utilisateur est un étudiant, vous pouvez continuer à créer la candidature
         Candidature::create([
             'ref_etudiant' => $etudiant->id,
             'ref_offre' => $offre,
         ]);
 
-        // Redirigez l'utilisateur avec un message de succès
         return redirect()->route('etudiant.offres')->with('success', 'Candidature soumise avec succès!');
     }
+
+    public function viewcandidature($offreId)
+    {
+        $candidatures = Candidature::where('ref_offre', $offreId)
+            ->with(['etudiant.user'])
+            ->get();
+
+        $offre = Offre::find($offreId);
+
+        return view('entreprise.viewcandidature', [
+            'candidatures' => $candidatures,
+            'offreNom' => $offre ? $offre->titre : 'Offre inconnue'
+        ]);
+    }
+
+
+
 
 
 
