@@ -14,7 +14,7 @@ class rep_entreprise extends User {
     protected $table = 'rep_entreprise';
 
     protected $fillable = [
-        'role',
+        'poste',
         'ref_entreprise',
         'ref_user'];
 
@@ -24,5 +24,10 @@ class rep_entreprise extends User {
     }
     public function entreprise(): HasOne{
         return $this->hasOne(entreprise::class, "ref_rep_entreprise");
+    }
+
+    public function offres()
+    {
+        return $this->hasMany(Offre::class, 'ref_entreprise', 'ref_entreprise');
     }
 }

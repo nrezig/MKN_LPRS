@@ -19,7 +19,6 @@ class entreprise extends Model
         'adresse',
         'description',
         'ref_user',
-        "ref_rep_entreprise"
     ];
 
     public function user():BelongsTo

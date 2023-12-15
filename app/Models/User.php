@@ -23,14 +23,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'nom',
-        'prenom',
-        'email',
-        'password',
-        'role',
-        'valide'
-    ];
+    protected $fillable = ['nom', 'prenom', 'email', 'password', 'role', 'valide'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -62,5 +55,10 @@ class User extends Authenticatable
 
     public function rep_entreprise(): HasOne{
         return $this->hasOne(rep_entreprise::class, "ref_user");
+    }
+
+    public function admin()
+    {
+        return $this->hasOne(Admin::class, 'ref_user');
     }
 }
