@@ -65,12 +65,16 @@
                 <th scope="col" class="px-6 py-3">Heure</th>
                 <th scope="col" class="px-6 py-3">Durée</th>
                 <th scope="col" class="px-6 py-3">Salle Attribuée</th>
+                <th scope="col" class="px-6 py-3">Organisateur</th>
                 <th scope="col" class="px-6 py-3">Valide</th>
                 <th scope="col" class="px-6 py-3">Actions</th>
             </tr>
             </thead>
             <tbody>
             @foreach($evenements as $evenement)
+                @php
+                    $organisateur = \App\Models\User::find($evenement->ref_users);
+                @endphp
                 <tr>
                     <td class="px-6 py-4">{{ $evenement->nom }}</td>
                     <td class="px-6 py-4">{{ $evenement->description }}</td>
@@ -78,6 +82,7 @@
                     <td class="px-6 py-4">{{ $evenement->heure }}</td>
                     <td class="px-6 py-4">{{ $evenement->duree }}</td>
                     <td class="px-6 py-4">{{ $evenement->salle->nom ?? 'Non attribuée' }}</td>
+                    <td class="px-6 py-4">{{ $organisateur->nom ?? 'Inconnu' }} {{ $organisateur->prenom ?? '' }}</td>
                     <td class="px-6 py-4">{{ $evenement->valide ? 'Oui' : 'Non' }}</td>
                     <td>
                         <form method="POST" action="{{ route('admin.attribuerSalle', $evenement->id) }}">
