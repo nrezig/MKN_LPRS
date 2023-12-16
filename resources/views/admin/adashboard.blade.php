@@ -15,7 +15,7 @@
 
     <div class="flex h-screen bg-gray-100">
         <div class="sidebar bg-white w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out">
-            <a href="#" class="text-black flex items-center space-x-2 px-4">
+            <a href="{{ route('admin.dashboard') }}" class="text-black flex items-center space-x-2 px-4">
                 <i class="fas fa-school fa-2x"></i>
                 <span class="text-2xl font-extrabold">Admin Dashboard</span>
             </a>
@@ -28,36 +28,35 @@
 
             </nav>
         </div>
-        <div>
 
-            <div class="flex-1 overflow-y-auto pl-100">
-                <div class="bg-white p-4 shadow mb-4">
-                    <h2 class="text-xl text-gray-800 font-bold">Bienvenue, {{ $user->prenom }} {{ $user->nom }}!</h2>
+        <div class="flex-1 overflow-y-auto pl-100">
+            <div class="bg-white p-4 shadow mb-4">
+                <h2 class="text-xl text-gray-800 font-bold">Bienvenue, {{ $user->prenom }} {{ $user->nom }}!</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white border rounded-lg p-4 shadow">
+                    <div class="text-primary text-xs font-weight-bold text-uppercase mb-1">Étudiants Inscrits</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $studentsCount }}</div>
                 </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div class="bg-white border rounded-lg p-4 shadow">
-                <div class="text-primary text-xs font-weight-bold text-uppercase mb-1">Étudiants Inscrits</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $studentsCount }}</div>
-            </div>
+                <div class="bg-white border rounded-lg p-4 shadow">
+                    <div class="text-success text-xs font-weight-bold text-uppercase mb-1">Entreprises Partenaires</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $companiesCount }}</div>
+                </div>
 
-            <div class="bg-white border rounded-lg p-4 shadow">
-                <div class="text-success text-xs font-weight-bold text-uppercase mb-1">Entreprises Partenaires</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $companiesCount }}</div>
-            </div>
+                <div class="bg-white border rounded-lg p-4 shadow">
+                    <div class="text-info text-xs font-weight-bold text-uppercase mb-1">Événements Planifiés</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $eventsCount }}</div>
+                </div>
 
-            <div class="bg-white border rounded-lg p-4 shadow">
-                <div class="text-info text-xs font-weight-bold text-uppercase mb-1">Événements Planifiés</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $eventsCount }}</div>
-            </div>
-
-            <div class="bg-white border rounded-lg p-4 shadow">
-                <div class="text-warning text-xs font-weight-bold text-uppercase mb-1">Offres d'Emploi</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jobOffersCount }}</div>
+                <div class="bg-white border rounded-lg p-4 shadow">
+                    <div class="text-warning text-xs font-weight-bold text-uppercase mb-1">Offres d'Emploi</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jobOffersCount }}</div>
+                </div>
             </div>
         </div>
-    </div>
-    </div>
+
 
 
 

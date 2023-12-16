@@ -19,6 +19,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::get('/wel', function () {return view('Welcome_test');})->name('wel');
+
 Route::get('/testco', function () {
     try {
         DB::connection()->getPdo();
@@ -98,7 +101,7 @@ Route::middleware(['auth', 'Etudiant', 'valideUser'])->group(function () {
 
 //gestion de type par l'admin
 Route::middleware(['auth', 'Admin', 'valideUser'])->group(function () {
-    Route::get('/admin/adashboard', function () { return view('admin/adashboard');});
+    Route::get('/admin/adashboard', function () { return view('admin/adashboard');})->name('admin.dashboard');
     Route::get('/admin/gestiontype', function () { return view('admin/gestiontype');});
     Route::put('/types/{type}/valider', [\App\Http\Controllers\TypeController::class, 'valider'])->name('types.valider');
     Route::delete('/types/{type}', [\App\Http\Controllers\TypeController::class, 'destroy'])->name('types.destroy');
@@ -166,9 +169,7 @@ Route::middleware(['auth', 'Etudiant', 'valideUser'])->group(function () {
     Route::post('/etudiant/evenements/{evenement}/desinscrire', [\App\Http\Controllers\EvenementController::class, 'desinscrireEvenement'])->name('etudiant.desinscrireEvenement');
 });
 
-Route::get('/etudiant/dashboard', function () {
-    return view('etudiant.dashboard');
-})->name('etudiant.dashboard');
+Route::get('/etudiant/dashboard', function () {return view('etudiant.dashboard');})->name('etudiant.dashboard');
 
 
 

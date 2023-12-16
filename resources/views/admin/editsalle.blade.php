@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-<h1>Modifiez ddune salle</h1>
+<h1>Modifiez une salle</h1>
 <form method="post" action="{{ route('admin.updateSalle', ['salle' => $salle->id]) }}">
     @csrf
     @method('put')

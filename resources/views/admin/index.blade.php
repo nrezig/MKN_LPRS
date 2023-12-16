@@ -8,7 +8,7 @@
 
     <div class="flex h-screen bg-gray-100">
         <div class="sidebar bg-white w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out">
-            <a href="#" class="text-black flex items-center space-x-2 px-4">
+            <a href="{{ route('admin.dashboard') }}" class="text-black flex items-center space-x-2 px-4">
                 <i class="fas fa-school fa-2x"></i>
                 <span class="text-2xl font-extrabold">Admin Dashboard</span>
             </a>
@@ -32,6 +32,9 @@
 
         <!-- Boutons d'ajout -->
         <div class="mb-4">
+
+            <h2 class="text-3xl font-bold mb-4">Gestion des Utilisateurs</h2>
+
             <a href="{{ route('createuser') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ajout Utilisateur</a>
             <a href="{{ route('createadmin') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Ajout Admin</a>
         </div>
@@ -57,7 +60,7 @@
                     </div>
                 </div>
                 <div class="col-auto">
-                    <button type="submit" class="btn btn-primary mb-2">Rechercher</button>
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Rechercher</button>
                 </div>
             </div>
         </form>
@@ -74,7 +77,7 @@
                     <th scope="col" class="px-6 py-3">Email</th>
                     <th scope="col" class="px-6 py-3">Rôle</th>
                     <th scope="col" class="px-6 py-3">Valide</th>
-                    <th scope="col" class="px-6 py-3">Action</th>
+                    <th scope="col" class="px-6 py-3">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -93,10 +96,10 @@
                             </form>
 
                             <form action="{{ route('admin.destroyuser', $user->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:text-red-800">Supprimer</button>
-                            </form>
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-600 hover:text-red-800">Supprimer</button>
+                        </form>
 
                         </td>
                     </tr>

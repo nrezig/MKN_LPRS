@@ -1,6 +1,12 @@
 @extends("layouts.template")
 @section("content")
 
+    @php
+        $offres = \App\Models\offre::with(['type', 'entreprise'])->get();
+        $types = \App\Models\type::all();
+    @endphp
+
+
     <div>
         @if(session()->has('confirmation'))
             <div>
@@ -10,16 +16,9 @@
     </div>
 
 
-
-    <div class="mt-4 mb-4 text-right">
-        <a href="{{ route('admin.acreateoffre') }}" class="inline-block px-4 py-2 text-white bg-blue-500 border rounded hover:bg-blue-600">
-            Ajouter
-        </a>
-    </div>
-
     <div class="flex h-screen bg-gray-100">
         <div class="sidebar bg-white w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out">
-            <a href="#" class="text-black flex items-center space-x-2 px-4">
+            <a href="{{ route('admin.dashboard') }}" class="text-black flex items-center space-x-2 px-4">
                 <i class="fas fa-school fa-2x"></i>
                 <span class="text-2xl font-extrabold">Admin Dashboard</span>
             </a>
@@ -33,14 +32,25 @@
             </nav>
         </div>
 
-    @php
-        $offres = \App\Models\offre::with(['type', 'entreprise'])->get();
-        $types = \App\Models\type::all();
-    @endphp
+        <div class="container mx-auto mt-8">
+            <!-- Affichage des confirmations -->
+            @if(session()->has('confirmation'))
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                    {{ session('confirmation') }}
+                </div>
+            @endif
 
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg container mx-auto mt-8">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <!-- Boutons d'ajout -->
+            <div class="mb-4">
+
+                <h2 class="text-3xl font-bold mb-4">Gestion des Offres</h2>
+
+                <a href="{{ route('admin.acreateoffre') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ajouter</a>
+            </div>
+
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-8">
+                <table class="w-full text-sm text-left text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
                 <th scope="col" class="px-6 py-3">ID</th>
                 <th scope="col" class="px-6 py-3">Titre</th>
@@ -49,8 +59,7 @@
                 <th scope="col" class="px-6 py-3">Statut</th>
                 <th scope="col" class="px-6 py-3">Valide</th>
                 <th scope="col" class="px-6 py-3">Entreprise</th>
-                <th scope="col" class="px-6 py-3">Modifier</th>
-                <th scope="col" class="px-6 py-3">Supprimer</th>
+                <th scope="col" class="px-6 py-3">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -78,16 +87,17 @@
                         @endif
                     </td>
                     <td class="px-6 py-4">
-                        <a href="{{ route('admin.aeditoffre', ['offre' => $offre]) }}"
-                           class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifier</a>
-                    </td>
-                    <td class="px-6 py-4">
-                        <form method="post" action="{{ route('admin.offre.destroy', ['offre' => $offre]) }}">
+                        <form action="{{ route('admin.aeditoffre', ['offre' => $offre]) }}">
                             @csrf
-                            @method('delete')
-                            <input class="font-medium text-blue-600 dark:text-blue-500 hover:underline" type="submit"
-                                   value="Supprimer"/>
+                            <button type="submit" class="text-blue-600 hover:text-blue-800">Modifier</button>
                         </form>
+
+                        <form action="{{ route('admin.offre.destroy', ['offre' => $offre]) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-600 hover:text-red-800">Supprimer</button>
+                        </form>
+
                     </td>
                 </tr>
             @endforeach
