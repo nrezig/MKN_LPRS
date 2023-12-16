@@ -182,7 +182,7 @@ Route::get('/etudiant/dashboard', function () {return view('etudiant.dashboard')
 
 
 
-Route::view('/home_n', 'home_n')->name('home_n');
+Route::view('/sortie', 'sortie')->name('sortie');
 
 Auth::routes();
 
