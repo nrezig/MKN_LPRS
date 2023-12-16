@@ -61,11 +61,8 @@ class EvenementController extends Controller
             'heure' => 'required',
             'duree' => 'required'
         ]);
-
         $data['ref_users'] = Auth::id();
-
         $event = Evenement::create($data);
-
         return redirect('etudiant/evenements')->with('success', 'Événement créé, en attente de validation');
     }
 
@@ -172,7 +169,7 @@ class EvenementController extends Controller
         $evenement->valide = true;
         $evenement->save();
 
-        return redirect()->route('admin.evenement')->with('success', 'Événement validé avec succès.');
+        return redirect('admin/gestionevent')->with('success', 'Événement validé avec succès.');
     }
 
 
