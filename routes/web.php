@@ -15,12 +15,12 @@ use App\Http\Controllers\offrecontroller;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', function () {
+Route::get('/welcome', function () {
     return view('welcome');
 });
 
 
-Route::get('/wel', function () {return view('Welcome_test');})->name('wel');
+Route::get('/', function () {return view('Welcome_test');})->name('');
 
 Route::get('/testco', function () {
     try {
