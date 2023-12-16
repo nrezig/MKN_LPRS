@@ -44,7 +44,6 @@
                 <td class="px-6 py-4">{{ $salle->capacite }}</td>
                 <td class="px-6 py-4">
                     <form action="{{ route('admin.editsalle', ['salle' => $salle->id]) }}" method="POST">
-                        <button type="submit" class="text-blue-600 hover:text-blue-800">Valider</button>
                     </form>
 
                     <form action="{{route('salle.destroy', ['salle' => $salle])}}" method="POST">
