@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('MKN_LPRS', 'MKN_LPRS') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -19,9 +19,9 @@
 <body>
 <nav class="bg-white border-gray-200 dark:bg-gray-900">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="{{ url('/') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <a class="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
-            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">{{ config('app.name', 'Laravel') }}</span>
+            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-blue">{{ config('MKN_LPRS', 'MKN_LPRS') }}</span>
 
             <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                 @auth

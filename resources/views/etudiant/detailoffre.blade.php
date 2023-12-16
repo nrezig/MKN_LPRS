@@ -19,6 +19,7 @@
                 <form method="POST" action="{{ route('etudiant.candidater', ['offre' => $offre->id]) }}">
                     @csrf
                     <button type="submit" class="btn btn-success">Candidater</button>
+                    <a href="{{ route('etudiant.offres') }}" class="btn">Retour</a>
                 </form>
             </div>
         </div>

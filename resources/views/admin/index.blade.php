@@ -20,7 +20,7 @@
 
     <div class="flex h-screen bg-gray-100">
         <div class="sidebar bg-white w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out">
-            <a href="{{ route('admin.dashboard') }}" class="text-black flex items-center space-x-2 px-4">
+            <a href="{{ route('etudiant.dashboard') }}" class="text-black flex items-center space-x-2 px-4">
                 <i class="fas fa-school fa-2x"></i>
                 <span class="text-2xl font-extrabold">Admin Dashboard</span>
             </a>

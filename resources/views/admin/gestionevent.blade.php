@@ -94,7 +94,7 @@
                         @if(!$evenement->valide)
                             <form action="{{ route('admin.validerEvenement', $evenement->id) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-success mt-2">Valider</button>
+                                <button type="submit" class="btn btn-primary mt-2 bg-green-500 hover:bg-green-700 text-white font-bold px-3 rounded">Valider</button>
                             </form>
                         @endif
                     </td>
