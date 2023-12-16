@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EtudiantController;
 use App\Http\Controllers\offrecontroller;
 use App\Http\Controllers\AdminController;
+use  App\Http\Controllers\EvenementController;
+
 
 
 
@@ -125,7 +127,6 @@ Route::middleware(['auth', 'Admin', 'valideUser'])->group(function () {
 
 });
 
-Route::post('/admin/valider-evenement/{evenementId}', 'EvenementController@validerEvenement')->name('admin.validerEvenement');
 
 
 //gestion d'evenement et salle
@@ -138,6 +139,8 @@ Route::middleware(['auth', 'Admin', 'valideUser'])->group(function () {
     Route::get('/admin/gestionsalle', [\App\Http\Controllers\SalleController::class, 'index'])->name('admin.gestionsalle');
     Route::get('/admin/salle/{salle}/edit', [\App\Http\Controllers\SalleController::class, 'edit'])->name('admin.editsalle');
     Route::put('/admin/salle/{salle}/update', [\App\Http\Controllers\SalleController::class, 'update'])->name('admin.updateSalle');
+    Route::post('/admin/valider-evenement/{evenementId}', [EvenementController::class, 'validerEvenement'])->name('admin.validerEvenement');
+
 });
 
 
