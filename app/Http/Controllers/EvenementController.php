@@ -63,7 +63,7 @@ class EvenementController extends Controller
         ]);
 
           $event = Evenement::create($data);
-        return redirect(route('evenement.index'));
+        return redirect(route('etudiant.evenements'));
     }
 
     /**

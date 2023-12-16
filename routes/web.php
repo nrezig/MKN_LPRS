@@ -71,7 +71,7 @@ Route::middleware(['auth', 'Entreprise', 'valideUser'])->group(function () {
     Route::get('/entreprise/offre/{offre}/candidatures', [\App\Http\Controllers\candidaturecontroller::class, 'viewcandidature'])->name('entreprise.viewcandidature');
     Route::get('/entreprise/createoffre', [OffreController::class, 'create'])->name('entreprise.createoffre');
     Route::post('/entreprise/storeoffre', [OffreController::class, 'store'])->name('entreprise.offre.store');
-    Route::get('/entreprise/editoffre/{offre}', [OffreController::class, 'edit'])->name('entreprise.editoffre');
+    Route::post('/entreprise/editoffre/{offre}', [OffreController::class, 'edit'])->name('entreprise.editoffre');
     Route::put('/entreprise/updateoffre/{offre}', [OffreController::class, 'update'])->name('entreprise.offre.update');
     Route::delete('/entreprise/destroyoffre/{offre}', [OffreController::class, 'destroy'])->name('entreprise.offre.destroy');
 });
@@ -117,7 +117,11 @@ Route::middleware(['auth', 'Admin', 'valideUser'])->group(function () {
     Route::post('/admin/attributionnewtype/{type}', [\App\Http\Controllers\typecontroller::class, 'processAttributionNewType'])
         ->name('types.process-attributionnewtype');
 
+
 });
+
+Route::post('/admin/valider-evenement/{evenementId}', 'EvenementController@validerEvenement')->name('admin.validerEvenement');
+
 
 //gestion d'evenement et salle
 Route::middleware(['auth', 'Admin', 'valideUser'])->group(function () {
