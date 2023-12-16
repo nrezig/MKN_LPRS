@@ -26,9 +26,17 @@ class AdminController extends Controller
     public function valider_user(Request $request)
     {
         $user = User::find($request->input("id"));
-        $user->update(['valide' => 1]);
-        return back();
+
+        if ($user) {
+            $user->update(['valide' => 1]);
+            return back();
+        } else {
+            // Gérer le cas où l'utilisateur n'a pas été trouvé
+            return back()->with('error', 'Utilisateur non trouvé.');
+        }
     }
+
+
 
 
     public function show()

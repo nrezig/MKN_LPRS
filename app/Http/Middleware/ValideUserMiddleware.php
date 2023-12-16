@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Middleware;
+use App\Http\Controllers\AdminController;
+
 
 use Closure;
 
