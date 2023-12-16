@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h2>Événements Disponibles</h2>
+        <h2>Évenements Disponibles</h2>
 
         <a href="{{ route('etudiant.mesEvenements') }}" class="btn btn-secondary mb-3">Mes événements</a>
         <a href="{{ route('evenement.create') }}" class="btn btn-primary mb-3">Créer un Événement</a>
