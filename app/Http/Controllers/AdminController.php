@@ -23,18 +23,19 @@ class AdminController extends Controller
         return view('admin.index', compact('users'));
     }
 
-    public function valider_user(Request $request)
+    public function valider_user(Request $request, $userId)
     {
-        $user = User::find($request->input("id"));
+        $user = User::find($userId);
 
         if ($user) {
-            $user->update(['valide' => 1]);
-            return back();
+            $user->valide = 1;
+            $user->save();
+            return redirect()->back()->with('success', 'Valide');
         } else {
-            // Gérer le cas où l'utilisateur n'a pas été trouvé
-            return back()->with('error', 'Utilisateur non trouvé.');
+            return redirect()->back()->with('error', 'pas valide');
         }
     }
+
 
 
 

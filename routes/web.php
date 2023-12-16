@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EtudiantController;
 use App\Http\Controllers\offrecontroller;
+use App\Http\Controllers\AdminController;
+
 
 
 /*
@@ -153,6 +155,7 @@ Route::middleware(['auth', 'Admin', 'valideUser'])->group(function () {
     Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'show'])->name('admin.index');
     Route::post('/admin', [\App\Http\Controllers\AdminController::class, 'valider_user'])->name('admin.valider_user');
     Route::get('/admin/searchuser', [\App\Http\Controllers\AdminController::class, 'searchUser'])->name('admin.searchuser');
+    Route::post('/admin/valider_user/{userId}', [AdminController::class, 'valider_user'])->name('admin.valider_user');
 
 });
 

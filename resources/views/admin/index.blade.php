@@ -6,6 +6,18 @@
     $users = \App\Models\User::all();
  @endphp
 
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="flex h-screen bg-gray-100">
         <div class="sidebar bg-white w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out">
             <a href="{{ route('admin.dashboard') }}" class="text-black flex items-center space-x-2 px-4">
@@ -92,8 +104,9 @@
                         <td class="px-6 py-4">
                             <form action="{{ route('admin.valider_user', $user->id) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="text-blue-600 hover:text-blue-800">Valider</button>
+                                <button type="submit">Valide</button>
                             </form>
+
 
                             <form action="{{ route('admin.destroyuser', $user->id) }}" method="POST">
                             @csrf
