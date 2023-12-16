@@ -16,7 +16,6 @@
             <nav>
                 <a href="{{ route('etudiant.offres') }}" class="block py-2.5 px-4 rounded hover:bg-gray-200">Offres</a>
                 <a href="{{ route('etudiant.evenement') }}" class="block py-2.5 px-4 rounded hover:bg-gray-200">Événements</a>
-                <!-- Remplacez 'x' par les noms réels de vos routes -->
             </nav>
         </div>
 
@@ -26,7 +25,8 @@
             <h2 class="text-3xl font-bold mb-4">Événements Disponibles</h2>
 
             <a href="{{ route('etudiant.mesEvenements') }}" class="btn btn-secondary mb-3">Mes événements</a>
-            <a href="{{ route('evenement.create') }}" class="btn btn-primary mb-3">Créer un Événement</a>
+            <a href="{{ route('etudiant.createEvenement') }}" class="btn btn-secondary mb-3">Créer événement</a>
+
         </div>
 
 

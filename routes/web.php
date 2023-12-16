@@ -99,6 +99,9 @@ Route::middleware(['auth', 'Etudiant', 'valideUser'])->group(function () {
     Route::get('/etudiant/offres', [\App\Http\Controllers\candidaturecontroller::class, 'viewoffre'])->name('etudiant.offres');
     Route::get('/etudiant/offres/{id}', [\App\Http\Controllers\candidaturecontroller::class, 'viewdetailoffre'])->name('etudiant.detailoffre');
     Route::post('/etudiant/candidater/{offre}', [\App\Http\Controllers\candidaturecontroller::class, 'candidater'])->name('etudiant.candidater');
+    Route::get('/etudiant/createEvenement', [EvenementController::class, 'create'])->name('etudiant.createEvenement');
+    Route::post('/etudiant/createEvenement', [EvenementController::class, 'store'])->name('etudiant.storeEvenement');
+
 });
 
 

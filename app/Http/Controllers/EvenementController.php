@@ -22,7 +22,7 @@ class EvenementController extends Controller
      */
     public function create()
     {
-        return view('evenement.create');
+        return view('etudiant.createEvenement');
     }
     /**
      * Display the specified resource.
@@ -62,7 +62,9 @@ class EvenementController extends Controller
             'duree' => 'required'
         ]);
         $data['ref_users'] = Auth::id();
+
         $event = Evenement::create($data);
+
         return redirect('etudiant/evenements')->with('success', 'Événement créé, en attente de validation');
     }
 
