@@ -54,16 +54,19 @@ class EvenementController extends Controller
      */
     public function store(Request $request)
     {
-         $data=$request->validate([
+        $data = $request->validate([
             'nom' => 'required',
             'description' => 'required',
             'date' => 'required',
-            'heure'=>'required',
-             'duree'=>'required'
+            'heure' => 'required',
+            'duree' => 'required'
         ]);
 
-          $event = Evenement::create($data);
-        return redirect(route('etudiant.evenements'));
+        $data['ref_users'] = Auth::id();
+
+        $event = Evenement::create($data);
+
+        return redirect('etudiant/evenements')->with('success', 'Événement créé, en attente de validation');
     }
 
     /**
